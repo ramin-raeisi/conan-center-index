@@ -4,33 +4,31 @@ from conan.tools.scm import Version
 from conan.errors import ConanInvalidConfiguration
 import os
 
-
 required_conan_version = ">=1.47.0"
 
 
 class PackageConan(ConanFile):
     name = "graphviz"
     description = "open source graph visualization software"
-    license = "CPL-1.0"  # Use short name only, conform to SPDX License List: https://spdx.org/licenses/
+    license = "CPL-1.0"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://graphviz.org/"
-    # no "conan"  and project name in topics. Use "pre-built" for tooling packages
     topics = ("graph", "visualization", "diagram", "pre-built")
-    settings = "os", "arch", "compiler", "build_type"  # even for pre-built executables
+    settings = "os", "arch", "compiler", "build_type"
+    version = "2.38.0"
 
-    # not needed but supress warning message from conan commands
     def layout(self):
         pass
 
-    # specific compiler and build type, usually are not distributed by vendors
     def package_id(self):
+        pass
         del self.info.settings.compiler
         del self.info.settings.build_type
 
     # in case some configuration is not supported
     def validate(self):
-        if self.info.settings.os == "Linux" and Version(self.info.settings.os.version) < 20.04:
-            raise ConanInvalidConfiguration(f"{self.ref} requires OSX >=20.04.")
+        if self.info.settings.os != "Linux":
+            raise ConanInvalidConfiguration("Only Supported in Linux for now {}".format(self.info.settings.os))
 
     # do not cache as source, instead, use build folder
     def source(self):
@@ -38,19 +36,13 @@ class PackageConan(ConanFile):
 
     # download the source here, than copy to package folder
     def build(self):
-        get(
-            self,
-            **self.conan_data["sources"][self.version][str(self.settings.os)][str(self.settings.arch)],
-            destination=self.source_folder,
-            strip_root=True,
-        )
+        get(self, "https://github.com/ramin-raeisi/graphviz-rel/releases/download/2.38.0/graphviz.tar.gz")
 
     # copy all needed files to the package folder
     def package(self):
         # a license file is always mandatory
         copy(self, pattern="LICENSE", dst=os.path.join(self.package_folder, "licenses"), src=self.source_folder)
-        copy(self, pattern="*.exe", dst=os.path.join(self.package_folder, "bin"), src=self.source_folder)
-        copy(self, pattern="foo", dst=os.path.join(self.package_folder, "bin"), src=self.source_folder)
+        copy(self, pattern="*", dst=self.package_folder, src=self.source_folder)
 
     def package_info(self):
         # folders not used for pre-built binaries
