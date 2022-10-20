@@ -2,5 +2,5 @@ sources:
   "2.38.0":
     "Linux":
       "x86_64":
-        url: "https://github.com/ramin-raeisi/graphviz-release/archive/refs/tags/2.38.0.tar.gz"
+        url: "https://github.com/ramin-raeisi/graphviz-release/releases/download/2.38.0/graphviz.tar.gz"
         sha256: "a93f0c9714e3e333a95f9ae3e6245793570b2610bd3fe4f34e64eb8c75d7e3fc"
