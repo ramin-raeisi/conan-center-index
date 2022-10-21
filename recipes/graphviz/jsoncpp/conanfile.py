@@ -5,12 +5,12 @@ import os
 import subprocess
 
 
-class PlantUML(ConanFile):
-    name = "J1939"
-    version = "5153e50"
-    description = "canbus framework"
-    author = "Satyam Satyam.LaxmiSharanLal@in.bosch.com"
-    url = "https://github.com/ramin-raeisi/conan-packages/releases/download/jsoncpp8190e06/J1939Static.tar.xz"
+class JsonCpp(ConanFile):
+    name = "jsoncpp"
+    version = "8190e06"
+    description = ""
+    author = "Ramin Raeisi, rr@epen.io"
+    url = "https://github.com/ramin-raeisi/conan-packages/releases/download/jsoncpp8190e06/jsoncpp8190e06.tar.xz"
     settings = "os", "arch"
     short_paths = True
     apply_env = False
